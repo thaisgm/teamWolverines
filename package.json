@@ -1,0 +1,24 @@
+{
+  "name": "teamwolverines",
+  "version": "1.0.0",
+  "description": "Girls in Tech Hackathon",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thaisgm/teamWolverines.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thaisgm/teamWolverines/issues"
+  },
+  "homepage": "https://github.com/thaisgm/teamWolverines#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.2.5"
+  }
+}
