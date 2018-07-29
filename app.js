@@ -7,6 +7,7 @@ var expressValidator = require('express-validator');
 var School = require('./models/school').School;
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
+var router = require('./routes/routes.js')
 
 mongoose.connection.on('connected', function(){
   console.log('Connected to MongoDb');
@@ -21,8 +22,10 @@ app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
 app.get('/', function(req, res){
-  res.render('index');
+
 })
+
+app.use('/', router)
 
 var port = process.env.PORT || 3000;
 
