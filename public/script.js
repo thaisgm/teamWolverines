@@ -25,7 +25,7 @@ $('.next-button.address').click(
 
 $('.level').on("change",//change keyup paste",
   function(){
-    console.log("here");
+    // console.log("here");
     if($(this).val()){
       $('.icon-lock').addClass("next");
     } else {
@@ -36,7 +36,7 @@ $('.level').on("change",//change keyup paste",
 
 $('.next-button.level').click(
   function(){
-    console.log("Something");
+    // console.log("Something");
     $('.level-section').addClass("fold-up");
     $('.distance-section').removeClass("folded");
   }
