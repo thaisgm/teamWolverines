@@ -25,29 +25,29 @@ router.post('/quiz', function(req, res){
   var programImportance = req.body.programPreference;
   var languageImportance = req.body.languagePreference;
 
+  console.log(req.body)
   var languageArr = [];
-  if(req.body.lang.indexOf('Spanish') > -1){
-    var index = req.body.lang.indexOf('Spanish');
+  if(req.body.languages.indexOf('Spanish') > -1){
+    var index = req.body.languages.indexOf('Spanish');
     languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('French') > -1){
-    var index = req.body.lang.indexOf('French');
-    languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('Cantonese') > -1){
-    var index = req.body.lang.indexOf('Cantonese');
-    languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('Mandarin') > -1){
-    var index = req.body.lang.indexOf('Mandarin');
-    languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('Japanese') > -1){
-    var index = req.body.lang.indexOf('Japanese');
-    languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('Russian') > -1){
-    var index = req.body.lang.indexOf('Russian');
-    languageArr.push(req.body.lang[index]);
+  } if(req.body.languages.indexOf('French') > -1){
+    var index = req.body.languages.indexOf('French');
+    languageArr.push(req.body.languages[index]);
+  } if(req.body.languages.indexOf('Cantonese') > -1){
+    var index = req.body.languages.indexOf('Cantonese');
+    languageArr.push(req.body.languages[index]);
+  } if(req.body.languages.indexOf('Mandarin') > -1){
+    var index = req.body.languages.indexOf('Mandarin');
+    languageArr.push(req.body.languages[index]);
+  } if(req.body.languages.indexOf('Japanese') > -1){
+    var index = req.body.languages.indexOf('Japanese');
+    languageArr.push(req.body.languages[index]);
+  } if(req.body.languages.indexOf('Russian') > -1){
+    var index = req.body.languages.indexOf('Russian');
+    languageArr.push(req.body.languages[index]);
   }
 
-  School.find({level: req.body.schoolLevel}, function(error, result){
-    console.log(result);
+  School.find({}, function(error, result){
 
     for(var i = 0; i < result.length; i ++){
 
