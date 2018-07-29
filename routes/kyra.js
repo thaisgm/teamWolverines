@@ -3,12 +3,8 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var School = require('../models/school');
 var TheScore = require('../models/thescore')
-
-
 router.post('/quiz', function(req, res){
-
   var theScoreArr = [];
-
   var totalPointsGiven = Number(req.body.distancePreference) + Number(req.body.academicPreference)
    + Number(req.body.programPreference) + Number(req.body.languagePreference) - 4;
    console.log('TOTAL!!!!!!!!!!!!', totalPointsGiven);
@@ -20,7 +16,6 @@ router.post('/quiz', function(req, res){
   var academicImportance = (req.body.academicPreference-1)/totalPointsGiven;
   var programImportance = (req.body.programPreference-1)/totalPointsGiven;
   var languageImportance = (req.body.languagePreference-1)/totalPointsGiven;
-
   var languageArr = [];
   if(typeof(req.body.languages) === 'string'){
     if(req.body.languages === 'Spanish') {
@@ -36,21 +31,10 @@ router.post('/quiz', function(req, res){
     } if (req.body.languages === 'Russian') {
       languageArr.push('Russian');
     }
-
-
-
-<<<<<<< HEAD
-  console.log(req.body)
-  var languageArr = [];
-  if(req.body.languages.indexOf('Spanish') > -1){
-    var index = req.body.languages.indexOf('Spanish');
-    languageArr.push(req.body.lang[index]);
-=======
   } else if (typeof(req.body.languages) === 'object'){
   if(req.body.languages.indexOf('Spanish') > -1){
     var index = req.body.languages.indexOf('Spanish');
     languageArr.push(req.body.languages[index]);
->>>>>>> 67ebc7c95d321a8624667ff1da158e220186d3e4
   } if(req.body.languages.indexOf('French') > -1){
     var index = req.body.languages.indexOf('French');
     languageArr.push(req.body.languages[index]);
@@ -67,36 +51,26 @@ router.post('/quiz', function(req, res){
     var index = req.body.languages.indexOf('Russian');
     languageArr.push(req.body.languages[index]);
   }
-<<<<<<< HEAD
-
-  School.find({}, function(error, result){
-=======
 } else {
   languageArr.push('Not available')
 }
-
   //var grade = req.body.schoolLevel;
   //upper case  level: req.body.schoolLevel
   console.log('almost there...')
   // console.log(School)
   // console.log("School: ", School.find())
   // console.log("More Info: ", School.find({}))
-
    School.find({}, function(error, result){
     if(error) {
       console.log(error)
       console.log('ERRERRERRERR')
     } else {
     // console.log("GRADEEEEEEEE", req.body.schoolLevel)
-
     //console.log(result);
->>>>>>> 67ebc7c95d321a8624667ff1da158e220186d3e4
-
     for(var i = 0; i < result.length; i ++){
       console.log("HELLOOOOO", result[i])
       console.log(result[i]._id)
       console.log(typeof result[i]._id)
-
       var langOffered = result[i].langProg;
       var langMatches = 0;
       for(var a = 0; a < langOffered.length; a ++) {
@@ -106,27 +80,19 @@ router.post('/quiz', function(req, res){
           }
         }
       }
-
       var langRatio = langMatches/languageArr.length;
       var langPercentage = Math.floor(langRatio * 100);
-
       var afterSchoolProgScore = 0;
       if(result[i].afterSchoolProg !== 'Not available') {
         afterSchoolProgScore = 100;
       }
-
-
         var distScore = Math.floor(50*distImportance);
         console.log("DISTSCORE", distScore);
-
         var totalTests = Number(result[i].test[0].English) + Number(result[i].test[0]['Math'])
         var ogScore = (totalTests)/2;
         var scoresScore = Math.floor(ogScore*academicImportance);
         console.log("ScSc", scoresScore);
-
-
         var total = distScore + scoresScore + afterSchoolProgScore + langPercentage;
-
         var x = result[i]._id.str;
         console.log(x)
         console.log(typeof x)
@@ -143,9 +109,7 @@ router.post('/quiz', function(req, res){
           "language": langPercentage,
           "total": total
         })
-
         console.log(theScore)
-
       theScore.save(function(err){
         if(err){
           console.log(err)
@@ -153,29 +117,16 @@ router.post('/quiz', function(req, res){
           console.log('saved!')
         }
       })
-
     theScoreArr.push(theScore);
-
-
      } //end of schools iteration
-
 //console.log(theScoreArr)
 //res.redirect('/');
     //
     theScoreArr.sort((a, b) => (a.total + b.total));
-
     theScore.find().populate();
     console.log(theScoreArr);
-
     res.render('top3list', {schools: theScoreArr})
-
   }
 })
-
-
-
-
-
 })
-
 module.exports = router;
