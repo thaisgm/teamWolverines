@@ -52,7 +52,7 @@ function googleTranslateElementInit() {
 
           <div class="input-section level-section folded">
             <select class="level" name="schoolLevel">
-              <option value="start">Where's your awesome child heading?</option>
+              <option id="q2" value="start">Where's your awesome child heading?</option>
               <option value="elementary">Elementary School</option>
               <option value="middleSchool">Middle School</option>
               <option value="highSchool">High School</option>
@@ -72,7 +72,7 @@ function googleTranslateElementInit() {
 
           </div>
           <div class="input-section distance-section folded">
-            <input class="distance" name="distancePreference" type="number" min="0" max="5" placeholder="From 1-5, how important is distance from school?" />
+            <input id="q3" class="distance" name="distancePreference" type="number" min="0" max="5" style= "width: 450px;" placeholder="How important is a short commute?" />
             <div class="animated-button">
               <span class="icon-distance-lock">
                 <i class="fa fa-lock">
@@ -85,7 +85,7 @@ function googleTranslateElementInit() {
             </div>
           </div>
           <div class="input-section performance-section folded">
-            <input class="performance" name="academicPreference" type="number" min="0" max="5" placeholder="From 1-5, how important is academic performance?" />
+            <input class="performance" name="academicPreference" type="number" min="0" max="5"  style= "width: 580px;" placeholder="How important is academic performance?" />
             <div class="animated-button">
               <span class="icon-performance-lock">
                 <i class="fa fa-lock">
@@ -98,7 +98,7 @@ function googleTranslateElementInit() {
             </div>
           </div>
           <div class="input-section programs-section folded">
-            <input class="programs" name="programPreference" type="number" min="0" max="5" placeholder="From 1-5, how important are afterschool programs?" />
+            <input class="programs" name="programPreference" type="number" min="0" max="5"  style= "width: 790px;" placeholder="How important are afterschool programs?" />
             <div class="animated-button">
               <span class="icon-programs-lock">
                 <i class="fa fa-lock">
@@ -111,7 +111,7 @@ function googleTranslateElementInit() {
             </div>
           </div>
           <div class="input-section languages-section folded">
-            <input class="languages" name="languagePreference" type="number" min="0" max="5" placeholder="From 1-5, how important is language aquisition?" />
+            <input class="languages" name="languagePreference" type="number" min="0" max="5" style= "width: 1090px;" placeholder="How important are language programs?" />
             <div class="animated-button">
               <span class="icon-languages-lock">
                 <i class="fa fa-lock">
@@ -125,16 +125,16 @@ function googleTranslateElementInit() {
           </div>
           <div class="input-section languageSelection-section folded">
             <div class="langBoxes">
-              <input type="checkbox" class="lang" name="languages" value="Spanish">Spanish</input>
-              <input type="checkbox" class="lang" name="languages" value="Cantonese">Cantonese</input>
-              <input type="checkbox" class="lang" name="languages" value="Russian">Russsian</input>
-              <input type="checkbox" class="lang" name="languages" value="French">French</input>
-              <input type="checkbox" class="lang" name="languages" value="Japanese">Japanese</input>
-              <input type="checkbox" class="lang" name="languages" value="Madarin">Mandarin </input>
+              <input type="checkbox" style = "display: inline-block; width: 15px; vertical-align: top;" class="lang" name="languages" value="Spanish"><span style = "display: inline-block; color: black;">Spanish</span></input>
+              <input type="checkbox" style = "display: inline-block; width: 15px; vertical-align: top;" class="lang" name="languages" value="Cantonese"><span style = "display: inline-block; color: black;">Cantonese</span></input>
+              <input type="checkbox" style = "display: inline-block; width: 15px; vertical-align: top;" class="lang" name="languages" value="Russian"><span style = "display: inline-block; color: black;">Russsian</span></input>
+              <input type="checkbox" style = "display: inline-block; width: 15px; vertical-align: top;" class="lang" name="languages" value="French"><span style = "display: inline-block; color: black;">French</span><br></input>
+              <input type="checkbox" style = "display: inline-block; width: 15px; vertical-align: top;" class="lang" name="languages" value="Japanese"><span style = "display: inline-block; color: black;">Japanese</span></input>
+              <input type="checkbox" style = "display: inline-block; width: 15px; vertical-align: top;" class="lang" name="languages" value="Madarin"><span style = "display: inline-block; color: black;">Mandarin</span></input>
             </div>
             <div class="animated-button">
               <span class="icon-languageSelection-lock">
-                <i class="fa fa-lock">
+                <i class="fa fa-paper-plane">
                 </i>
               </span>
               <span class="next-button languageSelection">
