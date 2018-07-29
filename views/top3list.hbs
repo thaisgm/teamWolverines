@@ -27,6 +27,7 @@ function drawChart() {
   // Optional; add a title and set the width and height of the chart
   var options = {'title':'Demographics', 'width':350, 'height':200};
 
+
   // Display the chart inside the <div> element with id="piechart"
   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
   chart.draw(data, options);
@@ -34,11 +35,11 @@ function drawChart() {
 </script>
 
     <div class="background">
-  <div class="container">
-    <div class="panel school-table">
+  <div class="container" id="background">
+    <div class="panel school-table" id="inner-background">
       {{#each schools}}
       <div class="school-plan">
-        <img src="{{school.imageUrl}}" alt="" class="school-img">
+        <img id="photo" src="{{school.imageUrl}}" alt="" class="school-img">
         <a href="{{school.Link}}"><h2>{{school.name}}</h2></a>
         <div class="sfDiv">
           <label><b>{{school.level}}</b></label>
@@ -59,29 +60,42 @@ function drawChart() {
         </div>
 
           <div class="sfDiv">
-            Math Proficiency Score
+            Math Proficiency Score: {{school.test.0.Math}}%
             <div id="myProgress">
               <div id="mathBar"></div>
             </div>
             <style>
+            #background {
+              display: flex;
+              flex-direction: column;
+            }
+            #inner-background {
+              display: flex;
+              flex-direction: column;
+            }
+            #photo {
+              width: 29%;
+              height: 25%;
+            }
             #myProgress {
+              height:30px;
                 width: 100%;
                 background-color: gold;
               }
               #mathBar {
-                width: {{test.Math}}%;
+                width: {{school.test.0.Math}}%;
                 height: 30px;
                 background-color: navy;
               }
               #englishBar {
-                width: {{test.English}}%;
+                width: {{school.test.0.English}}%;
                 height: 30px;
                 background-color: purple;
               }
             </style>
         </div> <br/>
         <div class="sfDiv">
-          English Proficiency Score
+          English Proficiency Score:{{{school.test.0.English}}}%
           <div id="myProgress">
             <div id="englishBar"></div>
           </div>

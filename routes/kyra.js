@@ -4,10 +4,11 @@ var mongoose = require('mongoose');
 var School = require('../models/school');
 var TheScore = require('../models/thescore')
 
-
+var grade;
 router.post('/quiz', function(req, res){
 
   //var theScoreArr = [];
+
 
   var totalPointsGiven = Number(req.body.distancePreference) + Number(req.body.academicPreference)
    + Number(req.body.programPreference) + Number(req.body.languagePreference) - 4;
@@ -59,7 +60,7 @@ router.post('/quiz', function(req, res){
   languageArr.push('Not available')
 }
 
-  var grade = req.body.schoolLevel;
+  grade = req.body.schoolLevel;
   // var gradeFirstLetter = grade.substring(0, 1);
   // var capital = gradeFirstLetter.toUpperCase();
   // var restOfWord = grade.substring(1, grade.length);
@@ -79,9 +80,9 @@ router.post('/quiz', function(req, res){
 
    School.find({'level': grade}, function(error, result){ //****
      console.log('\n')
-     for (var i = 0; i < result.length; i++){
-       console.log("hihi", result[i].level)
-     }
+     // for (var i = 0; i < result.length; i++){
+     //   console.log("hihi", result[i].level)
+     // }
      console.log('\n')
     if(error) {
       console.log("error", error)
@@ -128,7 +129,7 @@ router.post('/quiz', function(req, res){
         var total = Math.floor(distScore + scoresScore + afterSchoolProgScore + langPercentage);
 
         distScore = Math.floor(((-distScore + 100)*11.2)/100)
-        console.log('DISTSCOREEEEE', distScore)
+
 
         var theScore = new TheScore({
           "school": result[i]._id,
@@ -156,60 +157,138 @@ router.post('/quiz', function(req, res){
 
     //theScoreArr.push(theScore);
 
+    // if(i === result.length-1){
+    //   callback();
+    // }
 
-     } //end of schools iteration
+  }//end of schools iteration
 
 //console.log(theScoreArr)
 //res.redirect('/');
     //
     // theScoreArr.sort((a, b) => (a.total + b.total));
     //
-    TheScore.find().populate("school").exec(function(err, yay){
-      var filtered = yay.filter(function(scoreObj) { return (scoreObj.school.level === grade)})
-      console.log(filtered)
 
-      if(err){
-        res.send(err)
-      } else{
 
-        function compare(a,b){
-          let comparison=0;
-          if(a.total>b.total){
-            comparison=-1
-          }
-          else{
-            comparison =1
-          }
-          return comparison
-        }
-        filtered.sort(compare)
-        //console.log(result)
-        //console.log(filtered)
-
-        // var finalArr = filtered.sort(function(a, b) {return a.total + b.total})
-        // for(var i = 0; i < filtered.length; i ++) {
-        //
-        //   console.log('arrayyyyyy', filtered[i].total)
-        //   console.log(typeof(filtered[i].total))
-        // }
-
-        //console.log("RES2", result)
-        res.render('top3list', {schools: filtered})
-      }
-    });
+    //
+    // TheScore.find().populate("school").exec(function(err, yay){ ///wait till done saving before rendering?
+    //   var filtered = yay.filter(function(scoreObj) { return (scoreObj.school.level === grade)})
+    //
+    //
+    //   if(err){
+    //     res.send(err)
+    //   } else{
+    //
+    //     function compare(a,b){
+    //       let comparison=0;
+    //       if(a.total>b.total){
+    //         comparison=-1
+    //       }
+    //       else{
+    //         comparison = 1
+    //       }
+    //       return comparison
+    //     }
+    //
+    //     filtered.sort(compare)
+    //     //console.log(result)
+    //     //console.log(filtered)
+    //
+    //     // var finalArr = filtered.sort(function(a, b) {return a.total + b.total})
+    //     // for(var i = 0; i < filtered.length; i ++) {
+    //     //
+    //     //   console.log('arrayyyyyy', filtered[i].total)
+    //     //   console.log(typeof(filtered[i].total))
+    //     // }
+    //
+    //     //console.log("RES2", result)
+    //     res.render('top3list', {schools: filtered})
+    //   }
+    //
+    // });
     //console.log(theScoreArr);
-
-
     //res.redirect('/list')
+  //end of callback
+
+  //   var callback = function() {
+  //   TheScore.find().populate("school").exec(function(err, yay){ ///wait till done saving before rendering?
+  //     var filtered = yay.filter(function(scoreObj) { return (scoreObj.school.level === grade)})
+  //
+  //
+  //     if(err){
+  //       res.send(err)
+  //     } else{
+  //
+  //       function compare(a,b){
+  //         let comparison=0;
+  //         if(a.total>b.total){
+  //           comparison=-1
+  //         }
+  //         else{
+  //           comparison = 1
+  //         }
+  //         return comparison
+  //       }
+  //
+  //       filtered.sort(compare)
+  //       //console.log(result)
+  //       //console.log(filtered)
+  //
+  //       // var finalArr = filtered.sort(function(a, b) {return a.total + b.total})
+  //       // for(var i = 0; i < filtered.length; i ++) {
+  //       //
+  //       //   console.log('arrayyyyyy', filtered[i].total)
+  //       //   console.log(typeof(filtered[i].total))
+  //       // }
+  //
+  //       //console.log("RES2", result)
+  //       res.render('top3list', {schools: filtered})
+  //     }
+  //
+  //   });
+  //   //console.log(theScoreArr);
+  //
+  //
+  //   //res.redirect('/list')
+  //
+  // } //end of callback
 
 
-  }
+
+
+  } //end of post?
 })
-
+res.redirect('/list')
 
 
 
 
 })
+router.get('/list',function(req,res){
+  TheScore.find().populate("school").exec(function(err, yay){ ///wait till done saving before rendering?
+    var filtered = yay.filter(function(scoreObj) { return (scoreObj.school.level === grade)})
+    
 
+    if(err){
+      res.send(err)
+    } else{
+
+      function compare(a,b){
+        let comparison=0;
+        if(a.total>b.total){
+          comparison=-1
+        }
+        else{
+          comparison = 1
+        }
+        return comparison
+      }
+
+      filtered.sort(compare)
+
+      res.render('top3list', {schools: filtered})
+    }
+
+  });
+})
 module.exports = router;
