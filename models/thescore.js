@@ -21,4 +21,4 @@ var theScoreSchema = new Schema({
 
 var theScore = mongoose.model('TheScore', theScoreSchema);
 
-module.exports =  {TheScore: theScore}
+module.exports = theScore
