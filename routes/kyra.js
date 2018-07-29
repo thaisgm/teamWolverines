@@ -2,51 +2,68 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var School = require('../models/school');
-var InitialPoints = require('../models/initialPoints');
 var TheScore = require('../models/thescore')
 
-router.get('/blah', function(req, res) {
-
-  School.find({}, function(error, result){
-    if (error){
-      console.log(error);
-    }else {
-      console.log(result);
-      res.json(result)
-
-    }
-  })
-
-})
 
 router.post('/quiz', function(req, res){
-  var distImportance = req.body.distancePreference;
-  var academicImportance = req.body.academicPreference;
-  var programImportance = req.body.programPreference;
-  var languageImportance = req.body.languagePreference;
+  var totalPointsGiven = req.body.distancePreference + req.body.academicPreference
+   + req.body.programPreference + req.body.languagePreference - 4;
+
+  var distImportance = (req.body.distancePreference-1)/totalPointsGiven;
+  var academicImportance = (req.body.academicPreference-1)/totalPointsGiven;
+  var programImportance = (req.body.programPreference-1)/totalPointsGiven;
+  var languageImportance = (req.body.languagePreference-1)/totalPointsGiven;
 
   var languageArr = [];
-  if(req.body.lang.indexOf('Spanish') > -1){
-    var index = req.body.lang.indexOf('Spanish');
-    languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('French') > -1){
-    var index = req.body.lang.indexOf('French');
-    languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('Cantonese') > -1){
-    var index = req.body.lang.indexOf('Cantonese');
-    languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('Mandarin') > -1){
-    var index = req.body.lang.indexOf('Mandarin');
-    languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('Japanese') > -1){
-    var index = req.body.lang.indexOf('Japanese');
-    languageArr.push(req.body.lang[index]);
-  } if(req.body.lang.indexOf('Russian') > -1){
-    var index = req.body.lang.indexOf('Russian');
-    languageArr.push(req.body.lang[index]);
-  }
 
-  School.find({level: req.body.schoolLevel}, function(error, result){
+  if(typeof(req.body.languages) === 'string'){
+    if(req.body.languages === 'Spanish') {
+      languageArr.push('Spanish');
+    } if (req.body.languages === 'French') {
+      languageArr.push('French');
+    } if (req.body.languages === 'Cantonese') {
+      languageArr.push('Cantonese');
+    } if (req.body.languages === 'Mandarin') {
+      languageArr.push('Mandarin');
+    } if (req.body.languages === 'Japanese') {
+      languageArr.push('Japanese');
+    } if (req.body.languages === 'Russian') {
+      languageArr.push('Russian');
+    }
+
+
+
+  } else {
+  if(req.body.languages.indexOf('Spanish') > -1){
+    var index = req.body.languages.indexOf('Spanish');
+    languageArr.push(req.body.languages[index]);
+  } if(req.body.languages.indexOf('French') > -1){
+    var index = req.body.languages.indexOf('French');
+    languageArr.push(req.body.languages[index]);
+  } if(req.body.languages.indexOf('Cantonese') > -1){
+    var index = req.body.languages.indexOf('Cantonese');
+    languageArr.push(req.body.languages[index]);
+  } if(req.body.languages.indexOf('Mandarin') > -1){
+    var index = req.body.languages.indexOf('Mandarin');
+    languageArr.push(req.body.languages[index]);
+  } if(req.body.languages.indexOf('Japanese') > -1){
+    var index = req.body.languages.indexOf('Japanese');
+    languageArr.push(req.body.languages[index]);
+  } if(req.body.languages.indexOf('Russian') > -1){
+    var index = req.body.languages.indexOf('Russian');
+    languageArr.push(req.body.languages[index]);
+  }
+}
+
+  //var grade = req.body.schoolLevel;
+  //upper case  level: req.body.schoolLevel
+
+  School.find(function(error, result){
+
+    if(error) {
+      console.log(error)
+    } else {
+    console.log("GRADEEEEEEEE", req.body.schoolLevel)
     console.log(result);
 
     for(var i = 0; i < result.length; i ++){
@@ -60,7 +77,7 @@ router.post('/quiz', function(req, res){
           }
         }
       }
-      var langRatio = Math.floor(langMatches/languageArr);
+      var langRatio = Math.floor(langMatches/languageArr.length);
       var langPercentage = langRatio * 100;
 
       var afterSchoolProgScore = 0;
@@ -68,26 +85,25 @@ router.post('/quiz', function(req, res){
         afterSchoolProgScore = 100;
       }
 
-      var theScore;
 
-      InitialPoints.findById(result[i]._id, function(err, res){
+        var distScore = Math.floor(50*distImportance);
 
-        var distScore = Math.floor(res.dist*distImportance);
-        var scoresScore = Math.floor(res.score*academicImportance);
+        var ogScore = Math.floor((result[i].test.English + result[i].test['Math'])/2);
+        var scoresScore = Math.floor(ogMath*academicImportance);
 
 
         var total = distScore + scoresScore + afterSchoolProgScore + langPercentage;
 
-        theScore = new TheScore({
+        var theScore = new TheScore({
           "school": {
-            type: result[i]._id + '2',
+            type: result[i]._id,
             ref: 'School'
           },
           "dist": distScore,
           "commute": {
-            "car": res.commute.car,
-            "bus": res.commute.bus,
-            "walk": res.commute.walk
+            "car": 20,
+            "bus": 30,
+            "walk": 45
           },
           "scores": scoresScore,
           "afterschool": afterSchoolProgScore,
@@ -95,7 +111,7 @@ router.post('/quiz', function(req, res){
           "total": total
         })
 
-      })
+
 
       theScore.save(function(err){
         if(err){
@@ -107,9 +123,11 @@ router.post('/quiz', function(req, res){
 
 
 
-    }
+    } //end of schools iteration
 
-  })
+    res.render('top3list', {schools: theScore})
+
+  }})
 
 
 

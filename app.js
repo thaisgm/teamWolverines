@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var expressValidator = require('express-validator');
 var School = require('./models/school.js');
-var InitialPoints = require('./models/initialPoints.js');
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var router = require('./routes/routes.js');
@@ -29,15 +28,6 @@ app.use(express.static('public'))
 app.use('/', router);
 app.use('/', thais);
 app.use('/', kyra);
-
-translate('Ik spreek Engels', {to: 'en'}).then(res => {
-    console.log(res.text);
-    //=> I speak English
-    console.log(res.from.language.iso);
-    //=> nl
-}).catch(err => {
-    console.error(err);
-});
 
 var port = process.env.PORT || 3000;
 
