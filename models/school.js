@@ -19,7 +19,7 @@ var schoolSchema = new Schema({
 
 var school = mongoose.model('School', schoolSchema);
 
-var initialPointsSchema = new Schema({
+var pointsSchema = new Schema({
  "scores": [
 
  {"school": {
@@ -32,13 +32,13 @@ var initialPointsSchema = new Schema({
    "bus": Number,
    "walk": Number
  }},
- {"scores" Number},
+ {"scores": Number},
  {"afterschool": Number},
- {"language": Number}
+ {"language": Number},
+ {"totalPoints": Number}
  ]
-
 })
 
-var initialPoints = mongoose.model('InitialPoints', initialPointsSchema);
+var Points = mongoose.model('Points', pointsSchema);
 
-module.exports =  {'School': school, 'InitialPoints': initialPoints}
+module.exports =  {'School': school, 'Points': Points}
