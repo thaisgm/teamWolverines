@@ -19,6 +19,8 @@ var schoolSchema = new Schema({
 
 var school = mongoose.model('School', schoolSchema);
 
+//new points schema for each school
+
 var pointsSchema = new Schema({
  "scores": [
 
