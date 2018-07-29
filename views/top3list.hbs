@@ -7,10 +7,10 @@
   <body>
     {{#each schools}}
       <div class="container">
-        <img  src:'{{imageUrl}}'  />
-        <a href="{{link[0]}}">{{name}}</a>
+        <img  src="{{imageUrl}}"/>
+        <a href="{{Link}}">{{name}}</a>
         <div class="">
-          Distance:{{SOMEHOW CALCULATE THIS SHIT}}
+          Distance: {{size}}
         </div>
         <div class="">
           Check Your Commute time
@@ -22,12 +22,26 @@
         </div>
         <div class="">
           Math Proficiency Score
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{test.Math}}"
-              aria-valuemin="0" aria-valuemax="100" style="width:{{test.Math}}%">
+          <div id="myProgress">
+            <div id="myBar"></div>
+          </div>
+          <style>
+          #myProgress {
+              width: 100%;
+              background-color: grey;
+            }
+            #myBar {
+              width: {{test.Math}}%;
+              height: 30px;
+              background-color: green;
+            }
+          </style>
+          <!-- <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{schools.test.Math}}"
+              aria-valuemin="0" aria-valuemax="100" style={width:"{{test.Math}}%"}>
               {{test.Math}}%
             </div>
-          </div>
+          </div>-->
         </div>
         <div class="">
           Math Proficiency Score
@@ -40,19 +54,16 @@
         </div>
         <div class="">
           Languages offered <button>X</button>
-          <ul>{{{langProg.map((language)=>(<li>language</li>))}}}</ul>
         </div>
       </div>
       <div class="">
         Demographics <button type="button" name="button">expand</button>
         <ul>
-          {{{Object.keys(demo).map((race)=><li>race</li>)}}}
         </ul>
       </div>
       <div class="">
         Afterschool Programs <button type="button" name="button">expand</button>
         <div class="">
-          {{afterSchoolProg.map((prog)=><li>prog</li>)}}
         </div>
       </div>
     {{/each}}
