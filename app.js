@@ -4,7 +4,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var expressValidator = require('express-validator');
-var School = require('./models/school').School;
+var School = require('./models/school.js');
+var InitialPoints = require('./models/initialPoints.js');
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var router = require('./routes/routes.js');
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
+app.use(express.static('public'))
 
 app.use('/', router);
 app.use('/', thais);
