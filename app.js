@@ -5,11 +5,12 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var expressValidator = require('express-validator');
 var School = require('./models/school').School;
-var InitialPoints = require('.models/school').InitialPoints;
+var InitialPoints = require('./models/school').InitialPoints;
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var router = require('./routes/routes.js');
 var thais = require('./routes/thais.js');
+var kyra = require('./routes/kyra.js');
 
 mongoose.connection.on('connected', function(){
   console.log('Connected to MongoDb');
@@ -26,6 +27,7 @@ app.set('view engine', '.hbs');
 
 app.use('/', router);
 app.use('/', thais);
+app.use('/', kyra);
 
 var port = process.env.PORT || 3000;
 
