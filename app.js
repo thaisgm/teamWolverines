@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var expressValidator = require('express-validator');
 var School = require('./models/school').School;
+var InitialPoints = require('.models/school').InitialPoints;
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var router = require('./routes/routes.js')
@@ -22,7 +23,7 @@ app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
 app.get('/', function(req, res){
-
+  res.render('index');
 })
 
 app.use('/', router)

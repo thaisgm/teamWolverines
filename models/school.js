@@ -17,4 +17,24 @@ var schoolSchema = new Schema({
    "imageUrl": String,
 })
 
-module.exports =  mongoose.model('School', schoolSchema);
+var school = mongoose.model('School', schoolSchema);
+
+var initialPointsSchema = new Schema({
+  "school": {
+    type: mongoose.Schema.ObjectId,
+    ref: 'school'
+  },
+  "dist": Number,
+  "commute": {
+    "car": Number,
+    "bus": Number,
+    "walk": Number
+  }
+  "scores" Number,
+  "afterschool": Number,
+  "language": Number
+})
+
+var initialPoints = mongoose.model('InitialPoints', initialPointsSchema);
+
+module.exports =  {School: school, InitialPoints: initialPoints}
