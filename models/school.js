@@ -8,13 +8,13 @@ var schoolSchema = new Schema({
    "start": String,
    "end": String,
    "afterSchoolProg": Array,
-   "demo": Array,
+   "demo": Object,
    "size": Number,
    "test": Array,
    "address": String,
    "neighbor": String,
    "Link": Array,
    "imageUrl": String,
-})
+});
 
 module.exports = mongoose.model('School', schoolSchema);

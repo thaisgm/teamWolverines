@@ -2,34 +2,55 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var School = require('../models/school');
-var InitialPoints = require('../models/initialPoints');
 var TheScore = require('../models/thescore')
 
-router.get('/blah', function(req, res) {
-
-  School.find({}, function(error, result){
-    if (error){
-      console.log(error);
-    }else {
-      console.log(result);
-      res.json(result)
-
-    }
-  })
-
-})
 
 router.post('/quiz', function(req, res){
-  var distImportance = req.body.distancePreference;
-  var academicImportance = req.body.academicPreference;
-  var programImportance = req.body.programPreference;
-  var languageImportance = req.body.languagePreference;
 
+  var theScoreArr = [];
+
+  var totalPointsGiven = Number(req.body.distancePreference) + Number(req.body.academicPreference)
+   + Number(req.body.programPreference) + Number(req.body.languagePreference) - 4;
+   console.log('TOTAL!!!!!!!!!!!!', totalPointsGiven);
+   console.log(req.body.distancePreference)
+   console.log(req.body.academicPreference)
+   console.log(req.body.programPreference)
+   console.log(req.body.academicPreference)
+  var distImportance = (req.body.distancePreference-1)/totalPointsGiven;
+  var academicImportance = (req.body.academicPreference-1)/totalPointsGiven;
+  var programImportance = (req.body.programPreference-1)/totalPointsGiven;
+  var languageImportance = (req.body.languagePreference-1)/totalPointsGiven;
+
+  var languageArr = [];
+  if(typeof(req.body.languages) === 'string'){
+    if(req.body.languages === 'Spanish') {
+      languageArr.push('Spanish');
+    } if (req.body.languages === 'French') {
+      languageArr.push('French');
+    } if (req.body.languages === 'Cantonese') {
+      languageArr.push('Cantonese');
+    } if (req.body.languages === 'Mandarin') {
+      languageArr.push('Mandarin');
+    } if (req.body.languages === 'Japanese') {
+      languageArr.push('Japanese');
+    } if (req.body.languages === 'Russian') {
+      languageArr.push('Russian');
+    }
+
+
+
+<<<<<<< HEAD
   console.log(req.body)
   var languageArr = [];
   if(req.body.languages.indexOf('Spanish') > -1){
     var index = req.body.languages.indexOf('Spanish');
     languageArr.push(req.body.lang[index]);
+=======
+  } else if (typeof(req.body.languages) === 'object'){
+  if(req.body.languages.indexOf('Spanish') > -1){
+    var index = req.body.languages.indexOf('Spanish');
+    languageArr.push(req.body.languages[index]);
+>>>>>>> 67ebc7c95d321a8624667ff1da158e220186d3e4
   } if(req.body.languages.indexOf('French') > -1){
     var index = req.body.languages.indexOf('French');
     languageArr.push(req.body.languages[index]);
@@ -46,10 +67,35 @@ router.post('/quiz', function(req, res){
     var index = req.body.languages.indexOf('Russian');
     languageArr.push(req.body.languages[index]);
   }
+<<<<<<< HEAD
 
   School.find({}, function(error, result){
+=======
+} else {
+  languageArr.push('Not available')
+}
+
+  //var grade = req.body.schoolLevel;
+  //upper case  level: req.body.schoolLevel
+  console.log('almost there...')
+  // console.log(School)
+  // console.log("School: ", School.find())
+  // console.log("More Info: ", School.find({}))
+
+   School.find({}, function(error, result){
+    if(error) {
+      console.log(error)
+      console.log('ERRERRERRERR')
+    } else {
+    // console.log("GRADEEEEEEEE", req.body.schoolLevel)
+
+    //console.log(result);
+>>>>>>> 67ebc7c95d321a8624667ff1da158e220186d3e4
 
     for(var i = 0; i < result.length; i ++){
+      console.log("HELLOOOOO", result[i])
+      console.log(result[i]._id)
+      console.log(typeof result[i]._id)
 
       var langOffered = result[i].langProg;
       var langMatches = 0;
@@ -60,34 +106,37 @@ router.post('/quiz', function(req, res){
           }
         }
       }
-      var langRatio = Math.floor(langMatches/languageArr);
-      var langPercentage = langRatio * 100;
+
+      var langRatio = langMatches/languageArr.length;
+      var langPercentage = Math.floor(langRatio * 100);
 
       var afterSchoolProgScore = 0;
       if(result[i].afterSchoolProg !== 'Not available') {
         afterSchoolProgScore = 100;
       }
 
-      var theScore;
 
-      InitialPoints.findById(result[i]._id, function(err, res){
+        var distScore = Math.floor(50*distImportance);
+        console.log("DISTSCORE", distScore);
 
-        var distScore = Math.floor(res.dist*distImportance);
-        var scoresScore = Math.floor(res.score*academicImportance);
+        var totalTests = Number(result[i].test[0].English) + Number(result[i].test[0]['Math'])
+        var ogScore = (totalTests)/2;
+        var scoresScore = Math.floor(ogScore*academicImportance);
+        console.log("ScSc", scoresScore);
 
 
         var total = distScore + scoresScore + afterSchoolProgScore + langPercentage;
 
-        theScore = new TheScore({
-          "school": {
-            type: result[i]._id + '2',
-            ref: 'School'
-          },
+        var x = result[i]._id.str;
+        console.log(x)
+        console.log(typeof x)
+        var theScore = new TheScore({
+          "school": result[i]._id,
           "dist": distScore,
           "commute": {
-            "car": res.commute.car,
-            "bus": res.commute.bus,
-            "walk": res.commute.walk
+            "car": 20,
+            "bus": 30,
+            "walk": 45
           },
           "scores": scoresScore,
           "afterschool": afterSchoolProgScore,
@@ -95,21 +144,35 @@ router.post('/quiz', function(req, res){
           "total": total
         })
 
-      })
+        console.log(theScore)
 
       theScore.save(function(err){
         if(err){
-          res.send(err);
+          console.log(err)
         } else {
           console.log('saved!')
         }
       })
 
+    theScoreArr.push(theScore);
 
 
-    }
+     } //end of schools iteration
 
-  })
+//console.log(theScoreArr)
+//res.redirect('/');
+    //
+    theScoreArr.sort((a, b) => (a.total + b.total));
+
+    theScore.find().populate();
+    console.log(theScoreArr);
+
+    res.render('top3list', {schools: theScoreArr})
+
+  }
+})
+
+
 
 
 
