@@ -33,7 +33,8 @@ var initialPointsSchema = new Schema({
   }},
   {"scores" Number},
   {"afterschool": Number},
-  {"language": Number}
+  {"language": Number},
+  {"total": Number}
   ]
 })
 
