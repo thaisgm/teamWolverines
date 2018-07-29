@@ -65,24 +65,23 @@ router.post('/quiz', function(req, res){
 
   //var grade = req.body.schoolLevel;
   //upper case  level: req.body.schoolLevel
-  console.log('almost there...')
+  //console.log('almost there...')
   // console.log(School)
   // console.log("School: ", School.find())
   // console.log("More Info: ", School.find({}))
 
    School.find({}, function(error, result){
     if(error) {
-      console.log(error)
-      console.log('ERRERRERRERR')
+      console.log("error", error)
     } else {
     // console.log("GRADEEEEEEEE", req.body.schoolLevel)
 
     //console.log(result);
 
     for(var i = 0; i < result.length; i ++){
-      console.log("HELLOOOOO", result[i])
-      console.log(result[i]._id)
-      console.log(typeof result[i]._id)
+      // console.log("HELLOOOOO", result[i])
+      // console.log(result[i]._id)
+      // console.log(typeof result[i]._id)
 
       var langOffered = result[i].langProg;
       var langMatches = 0;
@@ -104,19 +103,15 @@ router.post('/quiz', function(req, res){
 
 
         var distScore = Math.floor(50*distImportance);
-        console.log("DISTSCORE", distScore);
+        //console.log("DISTSCORE", distScore);
 
         var totalTests = Number(result[i].test[0].English) + Number(result[i].test[0]['Math'])
         var ogScore = (totalTests)/2;
         var scoresScore = Math.floor(ogScore*academicImportance);
-        console.log("ScSc", scoresScore);
-
+        //console.log("ScSc", scoresScore);
 
         var total = distScore + scoresScore + afterSchoolProgScore + langPercentage;
 
-        var x = result[i]._id.str;
-        console.log(x)
-        console.log(typeof x)
         var theScore = new TheScore({
           "school": result[i]._id,
           "dist": distScore,
@@ -151,7 +146,7 @@ router.post('/quiz', function(req, res){
     //
     theScoreArr.sort((a, b) => (a.total + b.total));
 
-    TheScore.find().populate(); 
+    TheScore.find().populate();
     console.log(theScoreArr);
 
     res.render('top3list', {schools: theScoreArr})
