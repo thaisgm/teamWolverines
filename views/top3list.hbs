@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {{#each schools}}
+      <div class="container">
+        <img  src:'{{imageUrl}}'  />
+        <a href="{{link[0]}}">{{name}}</a>
+        <div class="">
+          Distance:{{SOMEHOW CALCULATE THIS SHIT}}
+        </div>
+        <div class="">
+          Check Your Commute time
+          <ul>
+            <li>car: {{commute.car}}</li>
+            <li>bus: {{commute.bus}}</li>
+            <li>walk: {{commute.walk}}</li>
+          </ul>
+        </div>
+        <div class="">
+          Math Proficiency Score
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{test.Math}}"
+              aria-valuemin="0" aria-valuemax="100" style="width:{{test.Math}}%">
+              {{test.Math}}%
+            </div>
+          </div>
+        </div>
+        <div class="">
+          Math Proficiency Score
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{test.English}}"
+              aria-valuemin="0" aria-valuemax="100" style="width:{{test.English}}%">
+              {{test.English}}%
+            </div>
+          </div>
+        </div>
+        <div class="">
+          Languages offered <button>X</button>
+          <ul>{{{langProg.map((language)=>(<li>language</li>))}}}</ul>
+        </div>
+      </div>
+      <div class="">
+        Demographics <button type="button" name="button">expand</button>
+        <ul>
+          {{{Object.keys(demo).map((race)=><li>race</li>)}}}
+        </ul>
+      </div>
+      <div class="">
+        Afterschool Programs <button type="button" name="button">expand</button>
+        <div class="">
+          {{afterSchoolProg.map((prog)=><li>prog</li>)}}
+        </div>
+      </div>
+    {{/each}}
+  </body>
+</html>

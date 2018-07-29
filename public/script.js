@@ -1,4 +1,3 @@
-console.log("Here")
 $('.address').on("change keyup paste",
   function(){
     console.log("HERE")
