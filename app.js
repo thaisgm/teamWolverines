@@ -9,8 +9,8 @@ var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var router = require('./routes/routes.js');
 var thais = require('./routes/thais.js');
-var kyra = require('./routes/kyra.js');
-
+var mike=require('./routes/mike.js');
+var kyra=require('./routes/kyra.js');
 mongoose.connection.on('connected', function(){
   console.log('Connected to MongoDb');
 });
@@ -25,9 +25,10 @@ app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.use(express.static('public'))
 
-app.use('/', router);
+ app.use('/', router);
 app.use('/', thais);
-app.use('/', kyra);
+app.use('/',mike);
+app.use('/',kyra)
 
 var port = process.env.PORT || 3000;
 
