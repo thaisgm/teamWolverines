@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
+app.use(express.static('public'))
 
 app.get('/', function(req, res){
 
