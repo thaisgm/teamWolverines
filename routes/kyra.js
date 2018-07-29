@@ -151,7 +151,7 @@ router.post('/quiz', function(req, res){
     //
     theScoreArr.sort((a, b) => (a.total + b.total));
 
-    theScore.find().populate();
+    TheScore.find().populate();
     console.log(theScoreArr);
 
     res.render('top3list', {schools: theScoreArr})
