@@ -2,7 +2,7 @@ body {
 	 font-family: "Roboto";
 }
  .back {
-	 background: linear-gradient(120grad, #6190E8, #A7BFE8);
+	 background: url("https://images.unsplash.com/photo-1470236108104-dc405c748d0f?ixlib=rb-0.3.5&s=7475abba58f1886b5bccc941d396b18e&auto=format&fit=crop&w=1500&q=80");
 	 position: absolute;
 	 width: 100%;
 	 height: 100%;
@@ -165,3 +165,28 @@ body {
 	 width: 100%;
 	 text-align: center;
 }
+
+#landingButton{
+	background-color: white;
+   border: none;
+   color: black;
+   padding: 16px 32px;
+   text-align: center;
+   font-size: 16px;
+   margin: 4px 2px;
+   opacity: 0.6;
+   transition: 0.3s;
+   display: inline-block;
+   text-decoration: none;
+   cursor: pointer;
+	 border-radius: 5px
+}
+#landingButton:hover {opacity: 1}
+
+#logo-navbar-middle{
+	width: 100%;
+	length: 100%;
+	height: 500%;
+}
+
+/* style = "font-weight: bold; width: 300px;font-size: 18px;padding: 10px; border: none; background: gray; color: black; cursor: pointer; border-radius: 5px" */
