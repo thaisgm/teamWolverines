@@ -189,4 +189,13 @@ body {
 	height: 500%;
 }
 
+#myDiv{
+	position: relative;
+}
+/* #landingBackground{
+	background: url("https://images.unsplash.com/photo-1475414201545-8e1d4de8dd13?ixlib=rb-0.3.5&s=3b37e5b64ce42b06c61d850840b983b8&auto=format&fit=crop&w=1050&q=80");
+	width: 100%;
+	height: 100%;
+} */
+
 /* style = "font-weight: bold; width: 300px;font-size: 18px;padding: 10px; border: none; background: gray; color: black; cursor: pointer; border-radius: 5px" */
