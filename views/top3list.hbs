@@ -38,15 +38,15 @@ function drawChart() {
     <div class="panel school-table">
       {{#each schools}}
       <div class="school-plan">
-        <img src="{{schools.imageUrl}}" alt="" class="school-img">
-        <a href="{{schools.Link}}"><h2>{{schools.name}}</h2></a>
+        <img src="{{school.imageUrl}}" alt="" class="school-img">
+        <a href="{{school.Link}}"><h2>{{school.name}}</h2></a>
         <div class="sfDiv">
-          <label><b>{{schools.level}}</b></label>
-          <label><b>{{schools.start}} - {{schools.end}}</b></label></br>
+          <label><b>{{school.level}}</b></label>
+          <label><b>{{school.start}} - {{school.end}}</b></label></br>
         </div>
         <div class="sfDiv">
-          <label><b>{{schools.address}}</b></label>
-          <label><b>{{schools.neighbor}}</b></label>
+          <label><b>{{school.address}}</b></label>
+          <label><b>{{school.neighbor}}</b></label>
         </div>
         <div class="sfDiv">
           <ul class="school-features">

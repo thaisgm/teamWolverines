@@ -7,15 +7,11 @@ var TheScore = require('../models/thescore')
 
 router.post('/quiz', function(req, res){
 
-  var theScoreArr = [];
+  //var theScoreArr = [];
 
   var totalPointsGiven = Number(req.body.distancePreference) + Number(req.body.academicPreference)
    + Number(req.body.programPreference) + Number(req.body.languagePreference) - 4;
-   //console.log('TOTAL!!!!!!!!!!!!', totalPointsGiven);
-   //console.log(req.body.distancePreference)
-   //console.log(req.body.academicPreference)
-   //console.log(req.body.programPreference)
-   //console.log(req.body.academicPreference)
+
   var distImportance = (req.body.distancePreference-1)/totalPointsGiven;
   var academicImportance = (req.body.academicPreference-1)/totalPointsGiven;
   var programImportance = (req.body.programPreference-1)/totalPointsGiven;
@@ -63,37 +59,44 @@ router.post('/quiz', function(req, res){
   languageArr.push('Not available')
 }
 
-  //var grade = req.body.schoolLevel;
-  //upper case  level: req.body.schoolLevel
-  //console.log('almost there...')
-  // console.log(School)
-  // console.log("School: ", School.find())
-  // console.log("More Info: ", School.find({}))
+  var grade = req.body.schoolLevel;
+  // var gradeFirstLetter = grade.substring(0, 1);
+  // var capital = gradeFirstLetter.toUpperCase();
+  // var restOfWord = grade.substring(1, grade.length);
+  // var finalGrade = capital + restOfWord;
+  // console.log("GRADE", finalGrade)
+  // console.log(typeof(finalGrade));
 
-   School.find({}, function(error, result){
+  if(grade === 'elementary') {
+    grade = 'Elementary'
+  } else if (grade === 'middleSchool'){
+    grade = 'Middle'
+  } else {
+    grade = 'High'
+  }
+
+  console.log('GRADEE', grade);
+  console.log(typeof grade)
+
+
+   School.find({'level': grade}, function(error, result){ //****
+     console.log('\n')
+     for (var i = 0; i < result.length; i++){
+       console.log("hihi", result[i].level)
+     }
+     console.log('\n')
     if(error) {
-<<<<<<< HEAD
       console.log("error", error)
-=======
-      console.log(error)
-      //console.log('ERRERRERRERR')
->>>>>>> 5b8e3c88b9cf3487c09aac5e95893a7dcd8bb06c
     } else {
     // console.log("GRADEEEEEEEE", req.body.schoolLevel)
 
     //console.log(result);
 
     for(var i = 0; i < result.length; i ++){
-<<<<<<< HEAD
       // console.log("HELLOOOOO", result[i])
       // console.log(result[i]._id)
       // console.log(typeof result[i]._id)
 
-=======
-      //console.log("HELLOOOOO", result[i])
-      //console.log(result[i]._id)
-      //console.log(typeof result[i]._id)
->>>>>>> 5b8e3c88b9cf3487c09aac5e95893a7dcd8bb06c
       var langOffered = result[i].langProg;
       var langMatches = 0;
       for(var a = 0; a < langOffered.length; a ++) {
@@ -112,27 +115,20 @@ router.post('/quiz', function(req, res){
         afterSchoolProgScore = 100;
       }
 
-
-        var distScore = Math.floor(50*distImportance);
+        // var dist = result[i].dist;
+        // var initDistScore = 100 - (dist*8.93);
+        // console.log("**************", distScore)
+        // var distScore = Math.floor(initDistScore*distImportance);
         //console.log("DISTSCORE", distScore);
-<<<<<<< HEAD
+        var distScore = result[i].dist;
 
-=======
->>>>>>> 5b8e3c88b9cf3487c09aac5e95893a7dcd8bb06c
         var totalTests = Number(result[i].test[0].English) + Number(result[i].test[0]['Math'])
         var ogScore = (totalTests)/2;
         var scoresScore = Math.floor(ogScore*academicImportance);
         //console.log("ScSc", scoresScore);
-<<<<<<< HEAD
 
         var total = distScore + scoresScore + afterSchoolProgScore + langPercentage;
 
-=======
-        var total = distScore + scoresScore + afterSchoolProgScore + langPercentage;
-        var x = result[i]._id.str;
-        //console.log(x)
-        //console.log(typeof x)
->>>>>>> 5b8e3c88b9cf3487c09aac5e95893a7dcd8bb06c
         var theScore = new TheScore({
           "school": result[i]._id,
           "dist": distScore,
@@ -146,22 +142,18 @@ router.post('/quiz', function(req, res){
           "language": langPercentage,
           "total": total
         })
-<<<<<<< HEAD
 
-        console.log(theScore)
-
-=======
         //console.log(theScore)
->>>>>>> 5b8e3c88b9cf3487c09aac5e95893a7dcd8bb06c
+
       theScore.save(function(err){
         if(err){
           console.log(err)
         } else {
-          //onsole.log('saved!')
+          console.log('saved!')
         }
       })
 
-    theScoreArr.push(theScore);
+    //theScoreArr.push(theScore);
 
 
      } //end of schools iteration
@@ -169,15 +161,19 @@ router.post('/quiz', function(req, res){
 //console.log(theScoreArr)
 //res.redirect('/');
     //
-<<<<<<< HEAD
     // theScoreArr.sort((a, b) => (a.total + b.total));
     //
-    TheScore.find().populate("school").exec(function(err, result){
+    TheScore.find().populate("school").exec(function(err, yay){
+      var filtered = yay.filter(scoreObj => (scoreObj.school.level === grade))
+      console.log(filtered)
+
       if(err){
         res.send(err)
       } else{
-        result.sort((a, b) => (a.total + b.total))
-        res.render('top3list', {schools: result})
+        //console.log(result)
+        var finalArr = filtered.sort((a, b) => (a.total + b.total))
+        //console.log("RES2", result)
+        res.render('top3list', {schools: finalArr})
       }
     });
     //console.log(theScoreArr);
@@ -186,12 +182,6 @@ router.post('/quiz', function(req, res){
     //res.redirect('/list')
 
 
-=======
-    theScoreArr.sort((a, b) => (a.total + b.total));
-    TheScore.find().populate('school');
-    console.log(theScoreArr);
-    res.render('top3list', {schools: theScoreArr})
->>>>>>> 5b8e3c88b9cf3487c09aac5e95893a7dcd8bb06c
   }
 })
 
