@@ -15,18 +15,29 @@
   <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
  <link rel="stylesheet" href="style.css">
+
+ <script>
+ </script>
   </head>
 <body>
+  <div id="google_translate_element"></div>
 
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <div class="back"></div>
   <div class="registration-form">
       <header>
-          <h1>Help Us Find Your Dream School!!</h1>
-          <p>Please fill out all the information</p>
+          <h1 >Help Us Find Your Dream School!!</h1>
+          <p>"Please fill out all the information"</p>
       </header>
-      <form action='/quiz' method'post'>
+      <form action='/quiz' method='post'>
           <div class="input-section address-section">
-            <input class="address" type="text" placeholder="Please enter your address here" autocomplete="off"/>
+            <input class="address" name="address" type="text" placeholder="Please enter your address here" autocomplete="off"/>
             <div class="animated-button">
               <span class="icon-paper-plane">
                 <i class="fa fa-home">
@@ -40,7 +51,8 @@
           </div>
 
           <div class="input-section level-section folded">
-            <select class="level" name="School Level">
+            <select class="level" name="schoolLevel">
+              <option value="start">Please Select a School Level</option>
               <option value="elementary">Elementary School</option>
               <option value="middleSchool">Middle School</option>
               <option value="highSchool">High School</option>
@@ -60,7 +72,7 @@
 
           </div>
           <div class="input-section distance-section folded">
-            <input class="distance"type="number" min="0" max="5" placeholder="From 1-5, how important is distance from school?" />
+            <input class="distance" name="distancePreference" type="number" min="0" max="5" placeholder="From 1-5, how important is distance from school?" />
             <div class="animated-button">
               <span class="icon-distance-lock">
                 <i class="fa fa-lock">
@@ -73,7 +85,7 @@
             </div>
           </div>
           <div class="input-section performance-section folded">
-            <input class="performance"type="number" min="0" max="5" placeholder="From 1-5, how important is academic performance?" />
+            <input class="performance" name="academicPreference" type="number" min="0" max="5" placeholder="From 1-5, how important is academic performance?" />
             <div class="animated-button">
               <span class="icon-performance-lock">
                 <i class="fa fa-lock">
@@ -86,7 +98,7 @@
             </div>
           </div>
           <div class="input-section programs-section folded">
-            <input class="programs"type="number" min="0" max="5" placeholder="From 1-5, how important are afterschool programs?" />
+            <input class="programs" name="programPreference" type="number" min="0" max="5" placeholder="From 1-5, how important are afterschool programs?" />
             <div class="animated-button">
               <span class="icon-programs-lock">
                 <i class="fa fa-lock">
@@ -99,7 +111,7 @@
             </div>
           </div>
           <div class="input-section languages-section folded">
-            <input class="languages"type="number" min="0" max="5" placeholder="From 1-5, how important is language aquisition?" />
+            <input class="languages" name="languagePreference" type="number" min="0" max="5" placeholder="From 1-5, how important is language aquisition?" />
             <div class="animated-button">
               <span class="icon-languages-lock">
                 <i class="fa fa-lock">
@@ -113,12 +125,12 @@
           </div>
           <div class="input-section languageSelection-section folded">
             <div class="langBoxes">
-              <input type="checkbox" class="lang" name="lang" value="Spanish">Span</input>
-              <input type="checkbox" class="lang" name="lang" value="Cantonese">Cant</input>
-              <input type="checkbox" class="lang" name="lang" value="Russian">Rus</input>
-              <input type="checkbox" class="lang" name="lang" value="French">Fren</input>
-              <input type="checkbox" class="lang" name="lang" value="Japanese">Japn</input>
-              <input type="checkbox" class="lang" name="lang" value="Madarin">Mand </input>
+              <input type="checkbox" class="lang" name="languages" value="Spanish">Span</input>
+              <input type="checkbox" class="lang" name="languages" value="Cantonese">Cant</input>
+              <input type="checkbox" class="lang" name="languages" value="Russian">Rus</input>
+              <input type="checkbox" class="lang" name="languages" value="French">Fren</input>
+              <input type="checkbox" class="lang" name="languages" value="Japanese">Japn</input>
+              <input type="checkbox" class="lang" name="languages" value="Madarin">Mand </input>
             </div>
             <div class="animated-button">
               <span class="icon-languageSelection-lock">

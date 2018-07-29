@@ -10,6 +10,7 @@ var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var router = require('./routes/routes.js');
 var thais = require('./routes/thais.js');
+const translate = require('google-translate-api');
 
 mongoose.connection.on('connected', function(){
   console.log('Connected to MongoDb');
@@ -27,6 +28,15 @@ app.use(express.static('public'))
 
 app.use('/', router);
 app.use('/', thais);
+
+translate('Ik spreek Engels', {to: 'en'}).then(res => {
+    console.log(res.text);
+    //=> I speak English
+    console.log(res.from.language.iso);
+    //=> nl
+}).catch(err => {
+    console.error(err);
+});
 
 var port = process.env.PORT || 3000;
 
