@@ -20,19 +20,21 @@ var schoolSchema = new Schema({
 var school = mongoose.model('School', schoolSchema);
 
 var initialPointsSchema = new Schema({
-  "school": {
+  "scores": [
+  {"school": {
     type: mongoose.Schema.ObjectId,
     ref: 'school'
-  },
-  "dist": Number,
-  "commute": {
+  }},
+  {"dist": Number},
+  {"commute": {
     "car": Number,
     "bus": Number,
     "walk": Number
-  }
-  "scores" Number,
-  "afterschool": Number,
-  "language": Number
+  }},
+  {"scores" Number},
+  {"afterschool": Number},
+  {"language": Number}
+  ]
 })
 
 var initialPoints = mongoose.model('InitialPoints', initialPointsSchema);
