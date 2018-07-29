@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var expressValidator = require('express-validator');
 var School = require('./models/school.js');
-var InitialPoints = require('./models/initialPoints.js');
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var router = require('./routes/routes.js');

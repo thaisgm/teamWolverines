@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 
-var theScoreSchema = new Schema({
+var scoreSchema = new Schema({
   "school": {
     type: mongoose.Schema.ObjectId,
     ref: 'School'
   },
-  "dist": Number,
+  "dist": Number, //string?
   "commute": {
     "car": Number,
     "bus": Number,
@@ -19,6 +19,6 @@ var theScoreSchema = new Schema({
   "total": Number
 })
 
-var theScore = mongoose.model('TheScore', theScoreSchema);
+var score = mongoose.model('Score', scoreSchema);
 
-module.exports = theScore
+module.exports = score;

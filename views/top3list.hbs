@@ -2,59 +2,160 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="compare.css">
     <title></title>
   </head>
   <body>
-    {{#each schools}}
-      <div class="container">
-        <img  src:'{{imageUrl}}'  />
-        <a href="{{link[0]}}">{{name}}</a>
-        <div class="">
-          Distance:{{SOMEHOW CALCULATE THIS SHIT}}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Race', 'Perfect'],
+  ['Black', 60],
+  ['Hispanic', 20],
+  ['Asian', 10],
+  ['White', 10]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Demographics', 'width':350, 'height':200};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+
+    <div class="background">
+  <div class="container">
+    <div class="panel school-table">
+      {{#each schools}}
+      <div class="school-plan">
+        <img src="{{imageUrl}}" alt="" class="school-img">
+        <a href="{{Link}}"><h2>{{name}}</h2></a>
+        <div class="sfDiv">
+          <label><b>{{level}}</b></label>
+          <label><b>{{start}} - {{end}}</b></label></br>
+        </div>
+        <div class="sfDiv">
+          <label><b>{{address}}</b></label>
+          <label><b>{{neighbor}}</b></label>
+        </div>
+        <div class="sfDiv">
+          <ul class="school-features">
+            <b>Distance: {{size}}</b>
+            <li class="school-features-item">car: {{commute.car}}</li>
+            <li class="school-features-item">bus: {{commute.bus}}</li>
+            <li class="school-features-item">walk: {{commute.walk}}</li>
+          </ul>
+          <div id="piechart"></div>
+        </div>
+
+          <div class="sfDiv">
+            Math Proficiency Score
+            <div id="myProgress">
+              <div id="mathBar"></div>
+            </div>
+            <style>
+            #myProgress {
+                width: 100%;
+                background-color: gold;
+              }
+              #mathBar {
+                width: {{test.Math}}%;
+                height: 30px;
+                background-color: navy;
+              }
+              #englishBar {
+                width: {{test.English}}%;
+                height: 30px;
+                background-color: purple;
+              }
+            </style>
+        </div> <br/>
+        <div class="sfDiv">
+          English Proficiency Score
+          <div id="myProgress">
+            <div id="englishBar"></div>
+          </div>
+      </div>
+
+      </div>
+      {{/each}}
+
+    </div>
+  </div>
+</div>
+  </body>  <!--
+    <body>
+      {{#each schools}}
+        <div class="container">
+          <img  src="{{imageUrl}}"/>
+          <a href="{{Link}}">{{name}}</a>
+          <div class="">
+            Distance: {{size}}
+          </div>
+          <div class="">
+            Check Your Commute time
+            <ul>
+              <li>car: {{commute.car}}</li>
+              <li>bus: {{commute.bus}}</li>
+              <li>walk: {{commute.walk}}</li>
+            </ul>
+          </div>
+          <div class="">
+            Math Proficiency Score
+            <div id="myProgress">
+              <div id="myBar"></div>
+            </div>
+            <style>
+            #myProgress {
+                width: 100%;
+                background-color: grey;
+              }
+              #myBar {
+                width: {{test.Math}}%;
+                height: 30px;
+                background-color: green;
+              }
+            </style>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="{{schools.test.Math}}"
+                aria-valuemin="0" aria-valuemax="100" style={width:"{{test.Math}}%"}>
+                {{test.Math}}%
+              </div>
+            </div>
+          </div>
+          <div class="">
+            Math Proficiency Score
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="{{test.English}}"
+                aria-valuemin="0" aria-valuemax="100" style="width:{{test.English}}%">
+                {{test.English}}%
+              </div>
+            </div>
+          </div>
+          <div class="">
+            Languages offered <button>X</button>
+          </div>
         </div>
         <div class="">
-          Check Your Commute time
+          Demographics <button type="button" name="button">expand</button>
           <ul>
-            <li>car: {{commute.car}}</li>
-            <li>bus: {{commute.bus}}</li>
-            <li>walk: {{commute.walk}}</li>
           </ul>
         </div>
         <div class="">
-          Math Proficiency Score
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{test.Math}}"
-              aria-valuemin="0" aria-valuemax="100" style="width:{{test.Math}}%">
-              {{test.Math}}%
-            </div>
+          Afterschool Programs <button type="button" name="button">expand</button>
+          <div class="">
           </div>
         </div>
-        <div class="">
-          Math Proficiency Score
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{test.English}}"
-              aria-valuemin="0" aria-valuemax="100" style="width:{{test.English}}%">
-              {{test.English}}%
-            </div>
-          </div>
-        </div>
-        <div class="">
-          Languages offered <button>X</button>
-          <ul>{{{langProg.map((language)=>(<li>language</li>))}}}</ul>
-        </div>
-      </div>
-      <div class="">
-        Demographics <button type="button" name="button">expand</button>
-        <ul>
-          {{{Object.keys(demo).map((race)=><li>race</li>)}}}
-        </ul>
-      </div>
-      <div class="">
-        Afterschool Programs <button type="button" name="button">expand</button>
-        <div class="">
-          {{afterSchoolProg.map((prog)=><li>prog</li>)}}
-        </div>
-      </div>
-    {{/each}}
-  </body>
+      {{/each}}
+    </body> -->
 </html>
