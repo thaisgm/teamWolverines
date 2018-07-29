@@ -15,6 +15,8 @@ var schoolSchema = new Schema({
    "neighbor": String,
    "Link": Array,
    "imageUrl": String,
+   "dist": Number,
+   "commute": Object
 });
 
 module.exports = mongoose.model('School', schoolSchema);
