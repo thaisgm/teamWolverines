@@ -75,8 +75,6 @@ router.post('/quiz', function(req, res){
     grade = 'High'
   }
 
-  console.log('GRADEE', grade);
-  console.log(typeof grade)
 
 
    School.find({'level': grade}, function(error, result){ //****
@@ -127,7 +125,10 @@ router.post('/quiz', function(req, res){
         var scoresScore = Math.floor(ogScore*academicImportance);
         //console.log("ScSc", scoresScore);
 
-        var total = distScore + scoresScore + afterSchoolProgScore + langPercentage;
+        var total = Math.floor(distScore + scoresScore + afterSchoolProgScore + langPercentage);
+
+        distScore = Math.floor(((-distScore + 100)*11.2)/100)
+        console.log('DISTSCOREEEEE', distScore)
 
         var theScore = new TheScore({
           "school": result[i]._id,
@@ -164,16 +165,36 @@ router.post('/quiz', function(req, res){
     // theScoreArr.sort((a, b) => (a.total + b.total));
     //
     TheScore.find().populate("school").exec(function(err, yay){
-      var filtered = yay.filter(scoreObj => (scoreObj.school.level === grade))
+      var filtered = yay.filter(function(scoreObj) { return (scoreObj.school.level === grade)})
       console.log(filtered)
 
       if(err){
         res.send(err)
       } else{
+
+        function compare(a,b){
+          let comparison=0;
+          if(a.total>b.total){
+            comparison=-1
+          }
+          else{
+            comparison =1
+          }
+          return comparison
+        }
+        filtered.sort(compare)
         //console.log(result)
-        var finalArr = filtered.sort((a, b) => (a.total + b.total))
+        //console.log(filtered)
+
+        // var finalArr = filtered.sort(function(a, b) {return a.total + b.total})
+        // for(var i = 0; i < filtered.length; i ++) {
+        //
+        //   console.log('arrayyyyyy', filtered[i].total)
+        //   console.log(typeof(filtered[i].total))
+        // }
+
         //console.log("RES2", result)
-        res.render('top3list', {schools: finalArr})
+        res.render('top3list', {schools: filtered})
       }
     });
     //console.log(theScoreArr);
