@@ -144,12 +144,21 @@ router.post('/quiz', function(req, res){
 //console.log(theScoreArr)
 //res.redirect('/');
     //
-    theScoreArr.sort((a, b) => (a.total + b.total));
+    // theScoreArr.sort((a, b) => (a.total + b.total));
+    //
+    TheScore.find().populate("school").exec(function(err, result){
+      if(err){
+        res.send(err)
+      } else{
+        result.sort((a, b) => (a.total + b.total))
+        res.render('top3list', {schools: result})
+      }
+    });
+    //console.log(theScoreArr);
 
-    TheScore.find().populate();
-    console.log(theScoreArr);
 
-    res.render('top3list', {schools: theScoreArr})
+    //res.redirect('/list')
+
 
   }
 })
