@@ -1,5 +1,5 @@
 # teamWolverines
-2nd Annual Hacking for Hackathon with Girls in Tech
+2nd Annual "Hacking for Humanity" Hackathon with Girls in Tech
 
 July 28-July 29, 2018
 
